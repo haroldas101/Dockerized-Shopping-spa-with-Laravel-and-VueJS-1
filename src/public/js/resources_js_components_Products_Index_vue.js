@@ -210,7 +210,7 @@ var render = function() {
                           "object-cover object-center w-full h-full block",
                         attrs: {
                           src:
-                            "http://shop-laravel_vue.com/images/test-products/ipod_classic_1-270x405.jpg",
+                            "images/test-products/ipod_classic_1-270x405.jpg",
                           height: "420",
                           width: "260",
                           alt: ""
@@ -266,7 +266,7 @@ var staticRenderFns = [
           staticClass: "object-cover object-center w-full h-full block",
           attrs: {
             src:
-              "http://shop-laravel_vue.com/images/test-products/palm_treo_pro_1-270x405.jpg",
+              "images/test-products/palm_treo_pro_1-270x405.jpg",
             height: "420",
             width: "260",
             alt: ""

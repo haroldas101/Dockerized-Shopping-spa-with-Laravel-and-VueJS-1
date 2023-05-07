@@ -49,7 +49,21 @@
                                 >
                             </div>
                         </div>
+                        
+                        <div class="p-2 w-full">
 
+                        <div class="relative">
+                            <label for="imgUrl" class="leading-7 text-sm text-gray-600">Image URL</label>
+                            <input
+                                type="text"
+                                id="imgUrl"
+                                name="imgUrl"
+                                class="w-full bg-gray-100 rounded border border-gray-300 focus:border-indigo-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                                v-model="form.imgUrl"
+                                :disabled="loading"
+                            >
+                        </div>
+                    </div>
 
                         <div class="p-2 w-full">
                             <button
@@ -80,6 +94,7 @@ export default {
                 name: '',
                 description: '',
                 price: '',
+                imgUrl: ''
             },
             errors: ''
         }
@@ -133,6 +148,13 @@ export default {
                     presence: true,
                     numericality: true,
                 },
+                imgUrl: {
+                    presence: true,
+                    url: {
+                        allowLocal: true,
+                        message: 'Must be a valid URL'
+                        }
+                }
             }
         },
     }

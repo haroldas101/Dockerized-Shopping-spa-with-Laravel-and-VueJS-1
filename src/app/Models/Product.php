@@ -20,4 +20,8 @@ class Product extends Model
     {
         return $this->belongsToMany(Order::class);
     }
+
+    protected $fillable = ['name', 'slug', 'description', 'price', 'imgUrl'];
+
+    public $imgUrl;
 }
