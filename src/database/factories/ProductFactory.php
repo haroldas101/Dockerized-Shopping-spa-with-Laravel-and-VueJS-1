@@ -25,7 +25,13 @@ class ProductFactory extends Factory
     {
         $productSuffixes = ['Sweater', 'Pants', 'Shirt', 'Glasses', 'Hat', 'Socks'];
         $name = $this->faker->company . ' ' . Arr::random($productSuffixes);
-
+            $product = new Product;
+            $product->name = 'Example Product';
+            $product->slug = 'example-product';
+            $product->description = 'This is an example product.';
+            $product->price = 10.99;
+            $product->imgUrl = 'https://example.com/image.jpg';
+            $product->save();
         return [
             'name' => $name,
             'slug' => Str::slug($name),
@@ -33,5 +39,7 @@ class ProductFactory extends Factory
             'price' => $this->faker->numberBetween(10000, 100000),
             'image' => 'https://images.pexels.com/photos/90946/pexels-photo-90946.jpeg'
         ];
+
+       
     }
 }
