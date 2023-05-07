@@ -97,30 +97,73 @@ __webpack_require__.r(__webpack_exports__);
       errors: ''
     };
   },
+
+  
   computed: {
     currentUser: function currentUser() {
       return this.$store.getters.currentUser;
     }
   },
   methods: {
+    handleImageChange(event) {
+        const file = event.target.files[0];
+    //   if (!file) return;
+
+      const reader = new FileReader();
+    //   reader.readAsDataURL(file);
+
+    //   reader.onload = (event) => {
+    //     this.$set(this.form, 'image', event.target.result);
+    //   };
+        reader.onload = (event) => {
+             this.form.image_url = event.target.result;
+        };
+        reader.readAsDataURL(file);
+    }
+  },
+  methods: {
     createProduct: function createProduct() {
       var _this = this;
 
+      // this.errors = null;
+      // var constraints = this.getConstraints();
+      // var errors = validate_js__WEBPACK_IMPORTED_MODULE_0___default()(this.$data.form, constraints);
+
+      // if (errors) {
+      //   this.errors = errors;
+      //   this.$toaster.error(errors);
+      //   return;
+      // }
+
+      // axios.post('/api/products', this.$data.form).then(function (response) {
+      //   _this.$toaster.success("Product: ".concat(_this.$data.form.name, ", Created successfully."));
+
+      //   _this.$router.push('/');
+      // });
+
       this.errors = null;
-      var constraints = this.getConstraints();
-      var errors = validate_js__WEBPACK_IMPORTED_MODULE_0___default()(this.$data.form, constraints);
 
-      if (errors) {
-        this.errors = errors;
-        this.$toaster.error(errors);
-        return;
-      }
+       const constraints = this.getConstraints();
 
-      axios.post('/api/products', this.$data.form).then(function (response) {
-        _this.$toaster.success("Product: ".concat(_this.$data.form.name, ", Created successfully."));
+       const errors = validate(this.$data.form, constraints)
 
-        _this.$router.push('/');
-      });
+        if (errors) {
+          this.errors = errors;
+           this.$toaster.error(errors);
+       return;
+       }
+
+        axios.post('/api/products', {
+           name: this.$data.form.name,
+            description: this.$data.form.description,
+            price: this.$data.form.price,
+             imgUrl: this.$data.form.imgUrl, // pass in the URL directly
+        }).then((response) => {
+        this.$toaster.success(
+          `Product: ${this.$data.form.name}, Created successfully.`
+         );
+           this.$router.push('/');
+        });
     },
     getConstraints: function getConstraints() {
       return {

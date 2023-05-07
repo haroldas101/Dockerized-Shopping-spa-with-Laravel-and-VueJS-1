@@ -60,9 +60,10 @@
                                 </div>
                                 <div class="mt-2">
                                     <input type="text" id="image_url" name="image_url" v-model="form.image_url" placeholder="Enter image URL" class="w-full bg-gray-100 rounded border border-gray-300 focus:border-indigo-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
-                             </div>
+                                </div>
+                                </div>
                             </div>
-                        </div>
+                         </div>
 
 
                         <div class="p-2 w-full">
@@ -107,19 +108,42 @@ export default {
     },
     methods: {
     handleImageChange(event) {
-      const file = event.target.files[0];
-      if (!file) return;
+        const file = event.target.files[0];
+    //   if (!file) return;
 
       const reader = new FileReader();
-      reader.readAsDataURL(file);
+    //   reader.readAsDataURL(file);
 
-      reader.onload = (event) => {
-        this.$set(this.form, 'image', event.target.result);
-      };
+    //   reader.onload = (event) => {
+    //     this.$set(this.form, 'image', event.target.result);
+    //   };
+        reader.onload = (event) => {
+             this.form.image_url = event.target.result;
+        };
+        reader.readAsDataURL(file);
     }
   },
     methods: {
         createProduct() {
+            // this.errors = null;
+
+            // const constraints = this.getConstraints();
+
+            // const errors = validate(this.$data.form, constraints)
+
+            // if (errors) {
+            //     this.errors = errors;
+            //     this.$toaster.error(errors);
+            //     return;
+            // }
+
+            // axios.post('/api/products', this.$data.form)
+            //     .then((response) => {
+            //         this.$toaster.success(
+            //             `Product: ${this.$data.form.name}, Created successfully.`
+            //         );
+            //         this.$router.push('/')
+            //     });
             this.errors = null;
 
             const constraints = this.getConstraints();
@@ -129,16 +153,20 @@ export default {
             if (errors) {
                 this.errors = errors;
                 this.$toaster.error(errors);
-                return;
+            return;
             }
 
-            axios.post('/api/products', this.$data.form)
-                .then((response) => {
-                    this.$toaster.success(
-                        `Product: ${this.$data.form.name}, Created successfully.`
-                    );
-                    this.$router.push('/')
-                });
+          axios.post('/api/products', {
+            name: this.$data.form.name,
+            description: this.$data.form.description,
+             price: this.$data.form.price,
+            imgUrl: this.$data.form.imgUrl, // pass in the URL directly
+            }).then((response) => {
+                this.$toaster.success(
+                `Product: ${this.$data.form.name}, Created successfully.`
+            );
+            this.$router.push('/');
+    });
 
         },
         getConstraints() {
