@@ -125,25 +125,6 @@ export default {
   },
     methods: {
         createProduct() {
-            // this.errors = null;
-
-            // const constraints = this.getConstraints();
-
-            // const errors = validate(this.$data.form, constraints)
-
-            // if (errors) {
-            //     this.errors = errors;
-            //     this.$toaster.error(errors);
-            //     return;
-            // }
-
-            // axios.post('/api/products', this.$data.form)
-            //     .then((response) => {
-            //         this.$toaster.success(
-            //             `Product: ${this.$data.form.name}, Created successfully.`
-            //         );
-            //         this.$router.push('/')
-            //     });
             this.errors = null;
 
             const constraints = this.getConstraints();
@@ -153,20 +134,45 @@ export default {
             if (errors) {
                 this.errors = errors;
                 this.$toaster.error(errors);
-            return;
+                return;
             }
 
-          axios.post('/api/products', {
-            name: this.$data.form.name,
-            description: this.$data.form.description,
-             price: this.$data.form.price,
-            imgUrl: this.$data.form.imgUrl, // pass in the URL directly
-            }).then((response) => {
-                this.$toaster.success(
-                `Product: ${this.$data.form.name}, Created successfully.`
-            );
-            this.$router.push('/');
-    });
+            if (!this.$data.form.imgUrl || this.$data.form.imgUrl.trim() === '') {
+        this.errors = { imgUrl: ["Img url can't be blank"] };
+        this.$toaster.error(this.errors);
+        return;
+    }
+
+            axios.post('/api/products', this.$data.form)
+                .then((response) => {
+                    this.$toaster.success(
+                        `Product: ${this.$data.form.name}, Created successfully.`
+                    );
+                    this.$router.push('/')
+                });
+        //     this.errors = null;
+
+        //     const constraints = this.getConstraints();
+
+        //     const errors = validate(this.$data.form, constraints)
+
+        //     if (errors) {
+        //         this.errors = errors;
+        //         this.$toaster.error(errors);
+        //     return;
+        //     }
+
+        //   axios.post('/api/products', {
+        //     name: this.$data.form.name,
+        //     description: this.$data.form.description,
+        //      price: this.$data.form.price,
+        //     imgUrl: this.$data.form.imgUrl, // pass in the URL directly
+        //     }).then((response) => {
+        //         this.$toaster.success(
+        //         `Product: ${this.$data.form.name}, Created successfully.`
+        //     );
+        //     this.$router.push('/');
+    // });
 
         },
         getConstraints() {

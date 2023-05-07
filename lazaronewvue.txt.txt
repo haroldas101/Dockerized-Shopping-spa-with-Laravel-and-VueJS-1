@@ -97,8 +97,6 @@ __webpack_require__.r(__webpack_exports__);
       errors: ''
     };
   },
-
-  
   computed: {
     currentUser: function currentUser() {
       return this.$store.getters.currentUser;
@@ -140,30 +138,30 @@ __webpack_require__.r(__webpack_exports__);
 
         _this.$router.push('/');
       });
+      this.errors = null;
 
-      // this.errors = null;
+       const constraints = this.getConstraints();
 
-      //  const constraints = this.getConstraints();
+       const errors = validate(this.$data.form, constraints)
 
-      //  const errors = validate(this.$data.form, constraints)
+        if (errors) {
+          this.errors = errors;
+           this.$toaster.error(errors);
+       return;
+       }
 
-      //   if (errors) {
-      //     this.errors = errors;
-      //      this.$toaster.error(errors);
-      //  return;
-      //  }
-
-      //   axios.post('/api/products', {
-      //      name: this.$data.form.name,
-      //       description: this.$data.form.description,
-      //       price: this.$data.form.price,
-      //        imgUrl: this.$data.form.imgUrl, // pass in the URL directly
-      //   }).then((response) => {
-      //   this.$toaster.success(
-      //     `Product: ${this.$data.form.name}, Created successfully.`
-      //    );
-      //      this.$router.push('/');
-      //   });
+        axios.post('/api/products', {
+           name: this.$data.form.name,
+            description: this.$data.form.description,
+            price: this.$data.form.price,
+             imgUrl: this.$data.form.imgUrl, // pass in the URL directly
+        }).then((response) => {
+        this.$toaster.success(
+          `Product: ${this.$data.form.name}, Created successfully.`
+         );
+           this.$router.push('/');
+        });
+    },
     },
     getConstraints: function getConstraints() {
       return {
@@ -186,14 +184,12 @@ __webpack_require__.r(__webpack_exports__);
           numericality: true
         },
         imgUrl: {
-          // presence: true,
+          presence: true,
           length: {
             maximum: 255,
             message: 'Must be at most 255 characters long'
           }
-        }
-        
-      };
+      }
     }
   }
 });
@@ -1607,12 +1603,6 @@ var render = function() {
                   })
                 ])
               ]),
-
-              // 
-             
-              
-              
-              // 
               _vm._v(" "),
               _c("div", { staticClass: "p-2 w-full" }, [
                 _c("div", { staticClass: "relative" }, [
@@ -1757,8 +1747,8 @@ var render = function() {
                   ])
                 ])
               ]),
-              
-                
+
+
 
 
 
