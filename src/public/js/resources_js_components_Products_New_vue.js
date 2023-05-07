@@ -141,7 +141,15 @@ __webpack_require__.r(__webpack_exports__);
         price: {
           presence: true,
           numericality: true
+        },
+        imgUrl: {
+          presence: true,
+          length: {
+            maximum: 255,
+            message: 'Must be at most 255 characters long'
+          }
         }
+        
       };
     }
   }
@@ -1556,6 +1564,12 @@ var render = function() {
                   })
                 ])
               ]),
+
+              // 
+             
+              
+              
+              // 
               _vm._v(" "),
               _c("div", { staticClass: "p-2 w-full" }, [
                 _c("div", { staticClass: "relative" }, [
@@ -1638,6 +1652,73 @@ var render = function() {
                   })
                 ])
               ]),
+
+
+              // image
+              _c("div", { staticClass: "p-2 w-full" }, [
+                _c("div", { staticClass: "relative" }, [
+                  _c(
+                    "label",
+                    {
+                      staticClass: "leading-7 text-sm text-gray-600",
+                      attrs: { for: "image" }
+                    },
+                    [_vm._v("Image")]
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "h-64 w-full border-dashed border-2 border-gray-400 rounded-lg" }, [
+                    _c("img", {
+                      staticClass: "h-full w-full object-contain",
+                      attrs: {
+                        src: _vm.form.image_url || "https://via.placeholder.com/640x480.png?text=Add+an+image",
+                        alt: "Image preview"
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("input", {
+                    staticClass:
+                      "w-full bg-gray-100 rounded border border-gray-300 focus:border-indigo-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out mt-2",
+                    attrs: {
+                      type: "text",
+                      id: "image",
+                      name: "image",
+                      placeholder: "Enter Image URL",
+                      disabled: _vm.loading
+                    },
+                    domProps: { value: _vm.form.image_url },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.form, "image_url", $event.target.value)
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "mt-2" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass:
+                          "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded",
+                        on: {
+                          click: function($event) {
+                            _vm.form.image_url = ""
+                          }
+                        }
+                      },
+                      [_vm._v("Remove Image")]
+                    )
+                  ])
+                ])
+              ]),
+              
+                
+
+
+
               _vm._v(" "),
               _c("div", { staticClass: "p-2 w-full" }, [
                 _c("button", {

@@ -52,18 +52,18 @@
                         
                         <div class="p-2 w-full">
 
-                        <div class="relative">
-                            <label for="imgUrl" class="leading-7 text-sm text-gray-600">Image URL</label>
-                            <input
-                                type="text"
-                                id="imgUrl"
-                                name="imgUrl"
-                                class="w-full bg-gray-100 rounded border border-gray-300 focus:border-indigo-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-                                v-model="form.imgUrl"
-                                :disabled="loading"
-                            >
+                            <div class="p-2 w-full">
+                                <div class="relative">
+                                    <label for="image" class="leading-7 text-sm text-gray-600">Image</label>
+                                <div class="h-64 w-full border-dashed border-2 border-gray-400 rounded-lg">
+                                     <img class="h-full w-full object-contain" :src="form.image_url || 'https://via.placeholder.com/640x480.png?text=Add+an+image'" :alt="form.name">
+                                </div>
+                                <div class="mt-2">
+                                    <input type="text" id="image_url" name="image_url" v-model="form.image_url" placeholder="Enter image URL" class="w-full bg-gray-100 rounded border border-gray-300 focus:border-indigo-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                             </div>
+                            </div>
                         </div>
-                    </div>
+
 
                         <div class="p-2 w-full">
                             <button
@@ -105,6 +105,19 @@ export default {
             return this.$store.getters.currentUser;
         },
     },
+    methods: {
+    handleImageChange(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+
+      reader.onload = (event) => {
+        this.$set(this.form, 'image', event.target.result);
+      };
+    }
+  },
     methods: {
         createProduct() {
             this.errors = null;
