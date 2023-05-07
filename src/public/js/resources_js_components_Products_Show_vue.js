@@ -193,7 +193,7 @@ var render = function() {
                   "lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded",
                 attrs: {
                   src:
-                    "http://shop-laravel_vue.com/images/test-products/palm_treo_pro_1-270x405.jpg",
+                    "images/test-products/palm_treo_pro_1-270x405.jpg",
                   alt: "ecommerce app",
                   height: "640",
                   width: "640"

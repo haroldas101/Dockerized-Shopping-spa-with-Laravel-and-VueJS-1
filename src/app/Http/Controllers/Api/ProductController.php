@@ -19,7 +19,7 @@ class ProductController extends Controller
     public function store(CreateProductRequest $request)
     {
         $request['slug'] = Str::slug($request['name']);
-        $product = Product::create($request->only(['name', 'slug', 'description', 'price']));
+        $product = Product::create($request->only(['name', 'slug', 'description', 'price','imgUrl']));
 
         return response()->json([
             "product" => $product

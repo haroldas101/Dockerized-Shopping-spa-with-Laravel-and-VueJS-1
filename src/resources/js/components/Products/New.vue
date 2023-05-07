@@ -52,6 +52,22 @@
 
 
                         <div class="p-2 w-full">
+
+                        <div class="relative">
+                            <label for="imgUrl" class="leading-7 text-sm text-gray-600">Image URL</label>
+                            <input
+                                type="text"
+                                id="imgUrl"
+                                name="imgUrl"
+                                class="w-full bg-gray-100 rounded border border-gray-300 focus:border-indigo-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                                v-model="form.imgUrl"
+                                :disabled="loading"
+                            >
+                        </div>
+
+                        </div>
+
+                        <div class="p-2 w-full">
                             <button
                                 type="submit"
                                 class="flex mx-auto text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg"
@@ -70,6 +86,7 @@
 
 <script>
 import validate from 'validate.js';
+import { validate } from 'vee-validate';
 
 export default {
     name: "register",
@@ -80,6 +97,7 @@ export default {
                 name: '',
                 description: '',
                 price: '',
+                imgUrl: ''
             },
             errors: ''
         }
@@ -90,6 +108,21 @@ export default {
             return this.$store.getters.currentUser;
         },
     },
+    methods: {
+    handleImageChange(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+    //   reader.readAsDataURL(file);
+    //   reader.onload = (event) => {
+    //     this.$set(this.form, 'image', event.target.result);
+    reader.onload = (event) => {
+             this.form.image_url = event.target.result;
+        };
+        reader.readAsDataURL(file);
+      
+    }
+  },
     methods: {
         createProduct() {
             this.errors = null;
@@ -104,12 +137,22 @@ export default {
                 return;
             }
 
-            axios.post('/api/products', this.$data.form)
-                .then((response) => {
-                    this.$toaster.success(
-                        `Product: ${this.$data.form.name}, Created successfully.`
-                    );
-                    this.$router.push('/')
+            // axios.post('/api/products', this.$data.form)
+            //     .then((response) => {
+            //         this.$toaster.success(
+            //             `Product: ${this.$data.form.name}, Created successfully.`
+            //         );
+            //         this.$router.push('/')
+            axios.post('/api/products', {
+            name: this.$data.form.name,
+            description: this.$data.form.description,
+             price: this.$data.form.price,
+            imgUrl: this.$data.form.imgUrl, // pass in the URL directly
+            }).then((response) => {
+                this.$toaster.success(
+                `Product: ${this.$data.form.name}, Created successfully.`
+            );
+            this.$router.push('/');
                 });
 
         },
@@ -133,6 +176,13 @@ export default {
                     presence: true,
                     numericality: true,
                 },
+                imgUrl: {
+                    presence: true,
+                    url: {
+                        allowLocal: true,
+                        message: 'Must be a valid URL'
+                        }
+                }
             }
         },
     }
