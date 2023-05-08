@@ -107,7 +107,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     handleImageChange(event) {
         const file = event.target.files[0];
-    //   if (!file) return;
+      if (!file) return;
 
       const reader = new FileReader();
     //   reader.readAsDataURL(file);
@@ -122,24 +122,70 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   methods: {
-    createProduct: function createProduct() {
-      var _this = this;
-
-      this.errors = null;
-      var constraints = this.getConstraints();
-      var errors = validate_js__WEBPACK_IMPORTED_MODULE_0___default()(this.$data.form, constraints);
-
-      if (errors) {
-        this.errors = errors;
-        this.$toaster.error(errors);
+    createProduct() {
+      const { name, price, description, imgUrl } = this.$data.form;
+    
+      if (!imgUrl) {
+        this.formErrors.imgUrl = ["Image URL can't be blank"];
         return;
       }
+    
+      axios
+        .post('/api/products', {
+          name,
+          price,
+          description,
+          imgUrl: imgUrl.trim() // trim the value here
+        })
+        .then(response => {
+          this.$router.push({ name: 'products.show', params: { id: response.data.id } });
+        })
+        .catch(error => {
+          if (error.response.status === 422) {
+            this.formErrors = error.response.data.errors;
+          } else {
+            console.error(error);
+          }
+        });
+    },
+    
 
-      axios.post('/api/products', this.$data.form).then(function (response) {
-        _this.$toaster.success("Product: ".concat(_this.$data.form.name, ", Created successfully."));
 
-        _this.$router.push('/');
-      });
+    // org lyg ir
+    // createProduct: function createProduct() {
+    //   var _this = this;
+
+    //   this.errors = null;
+    //   var constraints = this.getConstraints();
+    //   var errors = validate_js__WEBPACK_IMPORTED_MODULE_0___default()(this.$data.form, constraints);
+
+    //   if (errors) {
+    //     this.errors = errors;
+    //     this.$toaster.error(errors);
+    //     return;
+    //   }
+
+    //   axios.post('/api/products', {
+    //     name: this.$data.form.name,
+    //     description: this.$data.form.description,
+    //     price: this.$data.form.price,
+    //     img_url: this.$data.form.image_url
+    //   }).then((response) => {
+    //     this.$toaster.success(
+    //       `Product: ${this.$data.form.name}, Created successfully.`
+    //     );
+    //     this.$router.push('/');
+    //   });
+
+
+      // axios.post('/api/products', this.$data.form).then(function (response) {
+      //   _this.$toaster.success("Product: ".concat(_this.$data.form.name, ", Created successfully."));
+
+      //   _this.$router.push('/');
+      // });
+
+
+
 
       // this.errors = null;
 
@@ -164,7 +210,7 @@ __webpack_require__.r(__webpack_exports__);
       //    );
       //      this.$router.push('/');
       //   });
-    },
+    // },
     getConstraints: function getConstraints() {
       return {
         name: {
@@ -186,7 +232,12 @@ __webpack_require__.r(__webpack_exports__);
           numericality: true
         },
         imgUrl: {
-          // presence: true,
+          presence: true,
+          url: {
+            allowLocal: true,
+            schemes: ['http', 'https', 'ftp'],
+            message: 'Must be a valid URL'
+          },
           length: {
             maximum: 255,
             message: 'Must be at most 255 characters long'
@@ -1786,5 +1837,4 @@ render._withStripped = true
 
 
 /***/ })
-
-}]);
+}])

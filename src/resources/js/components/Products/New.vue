@@ -55,6 +55,7 @@
                             <div class="p-2 w-full">
                                 <div class="relative">
                                     <label for="image" class="leading-7 text-sm text-gray-600">Image</label>
+                                    <input type="text" name="imgUrl" v-model="form.imgUrl">
                                 <div class="h-64 w-full border-dashed border-2 border-gray-400 rounded-lg">
                                      <img class="h-full w-full object-contain" :src="form.image_url || 'https://via.placeholder.com/640x480.png?text=Add+an+image'" :alt="form.name">
                                 </div>
@@ -125,31 +126,81 @@ export default {
   },
     methods: {
         createProduct() {
-            this.errors = null;
+  const { name, price, description, imgUrl } = this.$data.form;
 
-            const constraints = this.getConstraints();
+  if (!imgUrl) {
+    this.formErrors.imgUrl = ["Image URL can't be blank"];
+    return;
+  }
 
-            const errors = validate(this.$data.form, constraints)
+  axios
+    .post('/api/products', {
+      name,
+      price,
+      description,
+      imgUrl: imgUrl.trim() // trim the value here
+    })
+    .then(response => {
+      this.$router.push({ name: 'products.show', params: { id: response.data.id } });
+    })
+    .catch(error => {
+      if (error.response.status === 422) {
+        this.formErrors = error.response.data.errors;
+      } else {
+        console.error(error);
+      }
+    });
+},
 
-            if (errors) {
-                this.errors = errors;
-                this.$toaster.error(errors);
-                return;
-            }
 
-            if (!this.$data.form.imgUrl || this.$data.form.imgUrl.trim() === '') {
-        this.errors = { imgUrl: ["Img url can't be blank"] };
-        this.$toaster.error(this.errors);
-        return;
-    }
 
-            axios.post('/api/products', this.$data.form)
-                .then((response) => {
-                    this.$toaster.success(
-                        `Product: ${this.$data.form.name}, Created successfully.`
-                    );
-                    this.$router.push('/')
-                });
+        // createProduct() {
+        //     this.errors = null;
+
+        //     const constraints = this.getConstraints();
+
+        //     const errors = validate(this.$data.form, constraints)
+
+        //     if (errors) {
+        //         this.errors = errors;
+        //         this.$toaster.error(errors);
+        //         return;
+        //     }
+
+        //     if (!imgUrl) {
+        // this.errors = { imgUrl: ["Img url can't be blank"] };
+        // this.$toaster.error(this.errors);
+        // return;
+    // }
+
+
+//     axios.post('/api/products', {
+//   name: this.$data.form.name,
+//   description: this.$data.form.description,
+//   price: this.$data.form.price,
+//   img_url: this.$data.form.image_url
+// }).then((response) => {
+//   this.$toaster.success(
+//     `Product: ${this.$data.form.name}, Created successfully.`
+//   );
+//   this.$router.push('/');
+// });
+
+
+            // axios.post('/api/products', this.$data.form)
+            //     .then((response) => {
+            //         this.$toaster.success(
+            //             `Product: ${this.$data.form.name}, Created successfully.`
+            //         );
+            //         this.$router.push('/')
+            //     });
+
+
+
+
+
+
+
         //     this.errors = null;
 
         //     const constraints = this.getConstraints();
@@ -174,7 +225,7 @@ export default {
         //     this.$router.push('/');
     // });
 
-        },
+        // },
         getConstraints() {
             return {
                 name: {
@@ -197,7 +248,13 @@ export default {
                 },
                 imgUrl: {
                     presence: true,
-                    url: {
+                    // url:{
+                        url: {
+    allowLocal: true,
+    schemes: ['http', 'https', 'ftp'],
+    message: 'Must be a valid URL'
+  },
+                    length: {
                         allowLocal: true,
                         message: 'Must be a valid URL'
                         }
