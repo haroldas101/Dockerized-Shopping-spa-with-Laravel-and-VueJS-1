@@ -123,13 +123,19 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     createProduct() {
-      const { name, price, description, imgUrl } = this.$data.form;
+      const { name, price, description, imgUrl } = this.$data.form || {};
     
       if (!imgUrl) {
         this.formErrors.imgUrl = ["Image URL can't be blank"];
         return;
       }
     
+      this.$data.form = this.$data.form || {};
+      this.$data.form.name = name;
+      this.$data.form.price = price;
+      this.$data.form.description = description;
+      this.$data.form.imgUrl = imgUrl;
+      
       axios
         .post('/api/products', {
           name,

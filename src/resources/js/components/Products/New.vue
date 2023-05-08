@@ -126,7 +126,7 @@ export default {
   },
     methods: {
         createProduct() {
-  const { name, price, description, imgUrl } = this.$data.form;
+  const { name, price, description, imgUrl = ""} = this.$data.form;
 
   if (!imgUrl) {
     this.formErrors.imgUrl = ["Image URL can't be blank"];
