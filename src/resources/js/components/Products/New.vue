@@ -57,10 +57,10 @@
                                     <label for="image" class="leading-7 text-sm text-gray-600">Image</label>
                                     <input type="text" name="imgUrl" v-model="form.imgUrl">
                                 <div class="h-64 w-full border-dashed border-2 border-gray-400 rounded-lg">
-                                     <img class="h-full w-full object-contain" :src="form.image_url || 'https://via.placeholder.com/640x480.png?text=Add+an+image'" :alt="form.name">
+                                     <img class="h-full w-full object-contain" :src="form.imgUrl || 'https://via.placeholder.com/640x480.png?text=Add+an+image'" :alt="form.name">
                                 </div>
                                 <div class="mt-2">
-                                    <input type="text" id="image_url" name="image_url" v-model="form.image_url" placeholder="Enter image URL" class="w-full bg-gray-100 rounded border border-gray-300 focus:border-indigo-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                    <input type="text" id="imgUrl" name="imgUrl" v-model="form.imgUrl" placeholder="Enter image URL" class="w-full bg-gray-100 rounded border border-gray-300 focus:border-indigo-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                 </div>
                                 </div>
                             </div>
@@ -119,7 +119,7 @@ export default {
     //     this.$set(this.form, 'image', event.target.result);
     //   };
         reader.onload = (event) => {
-             this.form.image_url = event.target.result;
+             this.form.imgUrl = event.target.result;
         };
         reader.readAsDataURL(file);
     }

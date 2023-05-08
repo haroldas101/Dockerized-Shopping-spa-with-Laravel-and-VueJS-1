@@ -116,7 +116,7 @@ __webpack_require__.r(__webpack_exports__);
     //     this.$set(this.form, 'image', event.target.result);
     //   };
         reader.onload = (event) => {
-             this.form.image_url = event.target.result;
+             this.form.imgUrl = event.target.result;
         };
         reader.readAsDataURL(file);
     }
@@ -1770,7 +1770,7 @@ var render = function() {
                     _c("img", {
                       staticClass: "h-full w-full object-contain",
                       attrs: {
-                        src: _vm.form.image_url || "https://via.placeholder.com/640x480.png?text=Add+an+image",
+                        src: _vm.form.imgUrl || "https://via.placeholder.com/640x480.png?text=Add+an+image",
                         alt: "Image preview"
                       }
                     })
@@ -1786,13 +1786,13 @@ var render = function() {
                       placeholder: "Enter Image URL",
                       disabled: _vm.loading
                     },
-                    domProps: { value: _vm.form.image_url },
+                    domProps: { value: _vm.form.imgUrl },
                     on: {
                       input: function($event) {
                         if ($event.target.composing) {
                           return
                         }
-                        _vm.$set(_vm.form, "image_url", $event.target.value)
+                        _vm.$set(_vm.form, "imgUrl", $event.target.value)
                       }
                     }
                   }),
@@ -1805,7 +1805,7 @@ var render = function() {
                           "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded",
                         on: {
                           click: function($event) {
-                            _vm.form.image_url = ""
+                            _vm.form.imgUrl = ""
                           }
                         }
                       },
