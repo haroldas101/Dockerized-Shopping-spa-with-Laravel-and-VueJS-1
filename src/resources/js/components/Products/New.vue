@@ -132,7 +132,7 @@ export default {
     this.formErrors.imgUrl = ["Image URL can't be blank"];
     return;
   }
-
+  
   axios
     .post('/api/products', {
       name,

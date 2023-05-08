@@ -7,7 +7,7 @@
                 <div class="lg:w-1/4 md:w-1/2 p-4 w-full mb-4">
 
                     <a class="block relative h-48 rounded overflow-hidden">
-                        <img src="http://shop-laravel_vue.com/images/test-products/palm_treo_pro_1-270x405.jpg" height="420" width="260" alt=""
+                        <img src="product.image" height="420" width="260" alt=""
                              class="object-cover object-center w-full h-full block">
                     </a>
 

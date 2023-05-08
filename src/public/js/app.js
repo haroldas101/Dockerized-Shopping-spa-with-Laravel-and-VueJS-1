@@ -20291,7 +20291,7 @@ var render = function() {
             ),
             _vm._v(" "),
             _c("span", { staticClass: "ml-3 text-xl" }, [
-              _vm._v("Shopping Cart")
+              _vm._v("AutoPublic")
             ])
           ]
         ),

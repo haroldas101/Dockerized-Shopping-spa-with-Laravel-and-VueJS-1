@@ -352,7 +352,7 @@ var staticRenderFns = [
           staticClass: "object-cover object-center w-full h-full block",
           attrs: {
             src:
-              "images/test-products/palm_treo_pro_1-270x405.jpg",
+            "product.image",
             height: "420",
             width: "260",
             alt: ""

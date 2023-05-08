@@ -3,7 +3,7 @@
         <div class="container px-12 py-14 mx-auto">
             <div class="lg:w-3/5 mx-auto flex flex-wrap">
 
-                <img src="http://shop-laravel_vue.com/images/test-products/palm_treo_pro_1-270x405.jpg" alt="ecommerce app" height="640" width="640"
+                <img :src="product.image" alt="" height="640" width="640"
                      class="lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded">
 
                 <div class="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">

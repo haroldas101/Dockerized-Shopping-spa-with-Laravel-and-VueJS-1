@@ -193,8 +193,8 @@ var render = function() {
                   "lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded",
                 attrs: {
                   src:
-                    "images/test-products/palm_treo_pro_1-270x405.jpg",
-                  alt: "ecommerce app",
+                  _vm.product.imgUrl,
+                  alt: "",
                   height: "640",
                   width: "640"
                 }
