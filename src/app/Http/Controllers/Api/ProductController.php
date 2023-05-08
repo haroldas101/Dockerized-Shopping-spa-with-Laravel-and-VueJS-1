@@ -13,6 +13,9 @@ class ProductController extends Controller
 { 
     public function index()
     {
+        //  return Product::with('categories:id,name')
+        // ->orderBy('price', 'asc')
+        // ->get();
         return Product::with('categories:id,name')
             ->get();
     }
